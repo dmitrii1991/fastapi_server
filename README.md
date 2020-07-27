@@ -2,8 +2,8 @@
 [![Fastapi version](https://img.shields.io/badge/fastapi-0.60.1-green)](https://www.python.org/)
 [![Aiofiles version](https://img.shields.io/badge/aiofiles-0.5.0-green)](https://www.python.org/)
 [![GitHub issues][issues-shield]][issues-url]
-![GitHub repo size](https://img.shields.io/github/languages/code-size/dmitrii1991/my_site)
-![GitHub last commit](https://img.shields.io/github/last-commit/dmitrii1991/my_site)
+![GitHub repo size](https://img.shields.io/github/languages/code-size/dmitrii1991/fastapi_server)
+![GitHub last commit](https://img.shields.io/github/last-commit/dmitrii1991/fastapi_server)
 [![GitHub stars][stars-shield]][stars-url]
 
 # Server for storing files
@@ -42,10 +42,10 @@ curl -X DELETE "http://127.0.0.1:80/file/delete/example_file" -H  "accept: appli
 ```
 
 
-[stars-shield]: https://img.shields.io/github/stars/burevestnik-png/web-lab1?style=social
-[stars-url]: https://github.com/dmitrii1991/my_site/stargazers
+[stars-shield]: https://img.shields.io/github/stars/dmitrii1991/fastapi_server?style=social
+[stars-url]: https://github.com/dmitrii1991/fastapi_server/stargazers
 
-[issues-shield]: https://img.shields.io/github/issues/burevestnik-png/web-lab1
-[issues-url]: https://github.com/dmitrii1991/my_site/issues
+[issues-shield]: https://img.shields.io/github/issues/dmitrii1991/fastapi_server
+[issues-url]: https://github.com/dmitrii1991/fastapi_server/issues
 
 
