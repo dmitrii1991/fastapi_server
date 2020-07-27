@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: fastapi.dockerfile
+    container_name: fastapi_container
+    ports:
+    - 80:80
+    volumes:
+      - data:/app/store/
+
+volumes:
+  data:
