@@ -1,3 +1,5 @@
-import os
+from os.path import join, abspath, dirname
 
-FILES_DIR = os.getcwd() + '/store/'
+
+ROOT_PATH = abspath(dirname(__file__))
+FILES_DIR = join(ROOT_PATH, 'store')

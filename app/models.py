@@ -19,7 +19,7 @@ class FileFullModel(FileBaseModel):
     expansion: str
     size: float
     date_change: datetime
-    detail: str = "succes"
+    detail: str = "Succes"
 
     class Config:
         schema_extra = {

@@ -3,11 +3,16 @@ import sys
 from datetime import datetime
 
 import aiofiles
+import uvicorn
 from fastapi import status, FastAPI, File, UploadFile, HTTPException
 from starlette.responses import FileResponse
 
-from settings import FILES_DIR
-from models import FileBaseModel, FileFullModel
+try:
+    from fastapi_server.app.settings import FILES_DIR
+    from fastapi_server.app.models import FileBaseModel, FileFullModel
+except ModuleNotFoundError:
+    from settings import FILES_DIR
+    from models import FileBaseModel, FileFullModel
 
 
 app = FastAPI(
@@ -26,21 +31,22 @@ app = FastAPI(
     response_description="The downloaded file",
 )
 async def upload(file: UploadFile = File(...)):
-    file_bytes = file.file.read()
-    filename = file.filename
-    name, expansion = filename.split('.')
-    now = datetime.now()
-    size = round(sys.getsizeof(file_bytes) / 1024 / 1024, 2)  # megabytes
+    if file:
+        file_bytes = file.file.read()
+        filename = file.filename
+        name, expansion = filename.split('.')
+        now = datetime.now()
+        size = round(sys.getsizeof(file_bytes) / 1024 / 1024, 2)  # megabytes
 
-    if not os.path.exists(FILES_DIR):
-        os.mkdir(FILES_DIR)
+        if not os.path.exists(FILES_DIR):
+            os.mkdir(FILES_DIR)
 
-    file_dir = FILES_DIR + '/'
-    file_path = file_dir + filename
+        file_dir = FILES_DIR + '/'
+        file_path = file_dir + filename
 
-    async with aiofiles.open(file_path, 'wb+') as new_file:
+        async with aiofiles.open(file_path, 'wb+') as new_file:
             await new_file.write(file_bytes)
-    return FileFullModel(full_name=filename, name=name, expansion=expansion, size=size, date_change=now)
+        return FileFullModel(full_name=filename, name=name, expansion=expansion, size=size, date_change=now)
 
 
 @app.get(
@@ -54,7 +60,10 @@ async def upload(file: UploadFile = File(...)):
 async def filestatus(filename: FileBaseModel):
     filename_path = os.path.join(FILES_DIR, filename.full_name)
     if os.path.exists(filename_path):
-        name, expansion = filename.full_name.split('.')
+        if '.' in filename.full_name:
+            name, expansion = filename.full_name.split('.')
+        else:
+            name, expansion = filename.full_name, ''
         size = round(os.path.getsize(filename_path) / 1024 / 1024, 2)  # megabytes
         time = datetime.fromtimestamp(os.path.getmtime(filename_path))
         return FileFullModel(
@@ -111,3 +120,5 @@ async def delete(filename: str):
         raise HTTPException(status_code=404, detail="File not found")
 
 
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
