@@ -11,6 +11,8 @@
 ## Description
 Простой сервер для загрузки/хранения/удаления файлов первая реализация
 
+Переименуйте docker-compose-template.yml в docker-compose.yml
+
 
 ##  Run
 ```shell script
